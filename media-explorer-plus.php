@@ -127,6 +127,14 @@ add_action( 'plugins_loaded', function() {
 	$GLOBALS['mexp_flickr'] = new MEXP_Flickr();
 } );
 
+
+
+
+/**
+ *
+ *
+ * @since   0.1.0
+ */
 function mexpplus_flickr_data( $return, $data, $url ) {
     if ( is_object( $data ) && property_exists( $data, 'provider_name' ) && 'Flickr' === $data->provider_name && strpos( $url, '@N' ) ) {
     	// MEXP embed URL: http://www.flickr.com/photos/32323502@N00/11793785093
@@ -141,3 +149,68 @@ function mexpplus_flickr_data( $return, $data, $url ) {
     return $return;
 }
 add_filter( 'oembed_dataparse', 'mexpplus_flickr_data', 10, 3 );
+
+
+/* ------------------------------------------------------------------------ *
+ * Add services
+ * ------------------------------------------------------------------------ */
+
+/**
+ * Twitter
+ *
+ * @since   0.1.0
+ */
+function mexpplus_twitter_credentials_callback() {
+
+	// Get your developer keys and tokens at: https://apps.twitter.com/
+	// Add your keys and tokens here.
+	return array(
+		'consumer_key'       => 'ZVMfDAPCJ5IT4hMSdNEiDMklg',
+		'consumer_secret'    => '2snhuTBL7NtZOhvpBmNGySX4kdfglO8gqQYseIbQ90ZT1VUPdU',
+		'oauth_token'        => '22964713-zFYwtymRaHUPeCto7MqVauH7IAC3CsPXGsn2pZGGT',
+		'oauth_token_secret' => 'ur41T9UCBnLdDU7LuPTmU1ALwXcPPD2dxytt2gcSx2lqf'
+	);
+
+}
+add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback' );
+
+/**
+ * YouTube
+ *
+ * @since   0.1.0
+ */
+function mexpplus_youtube_developer_key_callback() {
+
+	// Add your developer key here.
+	// Get your developer key at: <https://code.google.com/apis/console>
+	return 'AIzaSyAboJIw70PHz5Nju3XwITQLavY7NPCXhn0';
+
+}
+add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callback' );
+
+/**
+ * Remove Instagram (for now)
+ *
+ * @since   0.1.0
+ */
+function mexp_service_instagram_not( array $services ) {
+	$services['instagram'] = null;
+
+	return $services;
+}
+add_filter( 'mexp_services', 'mexp_service_instagram_not', 20 );
+
+/*
+add_filter( 'mexp_instagram_credentials', 'mexpplus_instagram_credentials_callback' );
+
+function mexpplus_instagram_credentials_callback( $credentials ) {
+
+	// Add your developer key here.
+	// Get your developer key at: <https://instagram.com/developer>
+	return array(
+		'access_token' => 'da78a1918b934ab5bf8f47c774f0a9a6',
+	);
+
+}
+*/
+
