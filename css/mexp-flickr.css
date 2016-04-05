@@ -1,0 +1,80 @@
+/* ************************ */
+/* Flickr-specific styles: */
+/* ************************ */
+
+#flickr-loadmore {
+    display: none !important;
+}
+
+.mexp-content-flickr_mexp_service .mexp-item {
+    height: 260px;
+    overflow: scroll;
+}
+
+.media-frame .mexp-item-flickr .mexp-item-main {
+    overflow: hidden;
+}
+
+.media-frame .mexp-item-flickr .mexp-item-content {
+    font-weight: bold;
+}
+
+.media-frame .spinner-bottom {
+    bottom: 18px;
+    position: absolute;
+    margin: auto;
+    left: 50%;
+}
+
+.mexp-item-thumb img {
+    width: 99%;
+}
+
+/*
+ * Fixes the 180px right margin for the ul.attachments in lo-res revices
+ * */
+@media (max-width: 782px) {
+    .mp6 .mexp-content-flickr ul.mexp-items, .mp6 .mexp-content-flickr ul.mexp-items {
+        margin-right: 0px;
+        overflow: hidden;
+    }
+}
+
+/**
+ * One column layout
+ * */
+@media (max-width: 699px) {
+    .mexp-content-flickr .attachment {
+        width: 100%;
+    }
+    .media-frame .mexp-content .media-toolbar .mexp-input-search {
+        width: 128px;
+    }
+}
+
+/**
+ * Two column layout
+ * */
+@media (min-width: 700px) and (max-width: 1199px) {
+    .mexp-content-flickr .attachment {
+        width: 45%;
+    }
+}
+
+/**
+ * Three column layout
+ * */
+@media (min-width: 1200px) and (max-width: 1499px) {
+    .mexp-content-flickr .attachment {
+        width: 31%;
+    }
+}
+
+/**
+ * Four column layout
+ * */
+@media (min-width: 1500px) {
+    .mexp-content-flickr .attachment {
+        width: 23%;
+    }
+}
