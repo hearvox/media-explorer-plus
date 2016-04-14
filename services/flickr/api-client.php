@@ -37,7 +37,7 @@ class MEXP_Flickr_API_Client {
 		}
 
 
-		$args['license'] = '0,1,2,3,4,5,6,7,8';
+		$args['license'] = '1,2,3,4,5,6,7,8';
 		$args['extras'] = 'date_taken,description,license,media,owner_name,geo,tags,machine_tags';
 
 		$url_bg = 'https://api.flickr.com/services/rest?method=flickr.photos.search&format=json&nojsoncallback=1&page=0&per_page=19&api_key=47a58e28dfdf95e41be62410eb8bcf03&tags=newspaper-dress';

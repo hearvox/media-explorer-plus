@@ -151,6 +151,16 @@ add_action('admin_init', 'mexpplus_options_init');
  * Section Callbacks
  * ------------------------------------------------------------------------ */
 
+/*
+Placeholders to add to array (localize):
+Enter your Flickr Key from Flickr App Garden here.
+Enter your Twitter Key from Twitter Apps here.
+Enter your Twitter Key Secret here.
+Enter your Twitter Access Token here.
+Enter your Twitter Access Token Secret here.
+Enter your YouTube API Key from Google APIs here.
+*/
+
 /**
  * Outputs text for the top of the Settings screen.
  */
@@ -158,7 +168,7 @@ function mexpplus_api_section_callback() {
     $options = mexpplus_get_options(); // Option: 'mexpplus'.
     ?>
     <fieldset>
-        <legend><?php _e( 'Get your API keys at: ', 'mexpplus' ); ?> <a href="https://code.google.com/apis/console">Flickr</a> | <a href="https://apps.twitter.com/">Twitter</a> | <a href="https://www.flickr.com/services/apps/create/">YouTube</a></legend>
+        <legend><?php _e( 'Get your API keys at: ', 'mexpplus' ); ?> <a href="https://www.flickr.com/services/apps/create/">Flickr</a> | <a href="https://apps.twitter.com/">Twitter</a> | <a href="https://code.google.com/apis/console">YouTube</a></legend>
         <ul class="inside">
         <?php
         foreach ( $options['credentials'] as $cred => $value ) {

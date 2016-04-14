@@ -153,7 +153,7 @@ add_action( 'plugins_loaded', function() {
 
 
 /**
- *
+ * Adds HTML to the default embed.
  *
  * @since   0.1.0
  */
@@ -169,8 +169,10 @@ function mexpplus_flickr_data( $return, $data, $url ) {
     }
 
     return $return;
+
+    // oembed_dataparse
 }
-add_filter( 'oembed_dataparse', 'mexpplus_flickr_data', 10, 3 );
+add_filter( 'oembed_result', 'mexpplus_flickr_data', 10, 3 );
 
 
 /* ------------------------------------------------------------------------ *
@@ -192,7 +194,6 @@ function mexpplus_twitter_credentials_callback() {
 		'oauth_token'        => '22964713-zFYwtymRaHUPeCto7MqVauH7IAC3CsPXGsn2pZGGT',
 		'oauth_token_secret' => 'ur41T9UCBnLdDU7LuPTmU1ALwXcPPD2dxytt2gcSx2lqf'
 	);
-
 }
 add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback' );
 
@@ -202,13 +203,24 @@ add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback' 
  * @since   0.1.0
  */
 function mexpplus_youtube_developer_key_callback() {
-
 	// Add your developer key here.
 	// Get your developer key at: <https://code.google.com/apis/console>
 	return 'AIzaSyAboJIw70PHz5Nju3XwITQLavY7NPCXhn0';
-
 }
 add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callback' );
+
+/**
+ * YouTube
+ *
+ * @since   0.1.0
+ */
+function mexpplus_flickr_api_key_callback() {
+
+	// Add your API key here.
+	// Get your API key at: <https://www.flickr.com/services/apps/create/>
+	return '47a58e28dfdf95e41be62410eb8bcf03';
+}
+// add_filter( 'mexpplus_flickr_api_key', 'mexpplus_flickr_api_key_callback' );
 
 /**
  * Remove Instagram (for now)

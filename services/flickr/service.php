@@ -186,12 +186,12 @@ class MEXP_Flickr_Service extends MEXP_Service {
 	}
 
 	private function _get_client() {
-		$api_key = (string) apply_filters( 'mexp_flickr_api_key', '' );
+		$api_key = (string) apply_filters( 'mexpplus_flickr_api_key', '' );
 
 		if ( empty( $api_key ) ) {
 			return new WP_Error(
-				'mexp_flickr_missing_api_key',
-				__( 'Missing API key for Flickr', 'mexp-flickr' )
+				'mexpplus_flickr_missing_api_key',
+				__( 'Missing API key for Flickr', 'mexpplus' )
 			);
 		}
 
