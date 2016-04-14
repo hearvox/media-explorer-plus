@@ -4,14 +4,15 @@
  * Depends: Media Explorer
  * Plugin URI: https://github.com/gedex/mexp-flickr
  * Description: Flickr extension for the Media Explorer.
- * Version: 0.1.0
+ * Version: 0.1.1
  * Author: Akeda Bagus and Barrett Golding
  * Author URI: http://gedex.web.id/
- * Text Domain: mexp-flickr
+ * Text Domain: mexpplus
  * Domain Path: /languages
  * License: GPL v2 or later
  * Requires at least: 3.6
- * Tested up to: 3.8
+ * Tested up to: 4.5
+ * Plugin prefix: mexpplus
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+
+
+/* ------------------------------------------------------------------------ *
+ * Plugin init and uninstall
+ * ------------------------------------------------------------------------ */
+
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
+if ( defined( 'MEXPPLUS_VERSION' ) ) {
+    return;
+}
+
+define( 'MEXPPLUS_VERSION', '0.1.2' );
+
+/* ------------------------------------------------------------------------ *
+ * Required Plugin Files
+ * ------------------------------------------------------------------------ */
+include_once( dirname( __FILE__ ) . '/includes/admin-options.php' );
 
 /**
  * Class that acts as plugin bootstrapper.
@@ -105,7 +127,7 @@ class MEXP_Flickr {
 	 * @return void
 	 */
 	public function i18n() {
-		load_plugin_textdomain( 'mexp-flickr', false, 'mexp-flickr/languages' );
+		load_plugin_textdomain( 'mexp-flickr', false, 'media-explorer-plus/languages' );
 	}
 
 	/**
