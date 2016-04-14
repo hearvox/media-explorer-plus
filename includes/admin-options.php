@@ -243,12 +243,12 @@ function mexpplus_licenses_section_callback() {
         <legend><?php _e( 'Check the licenses you wish to browse:', 'mexpplus' ); ?></legend>
         <ul class="inside">
         <?php
-        // Gets post types explicitly set 'public' (not those registered only with individual public options):
-        // https://codex.wordpress.org/Function_Reference/get_post_types
+        //
         foreach ( $flickr_cc_licences as $licence ) {
             $cc = ( empty( $licence['cc'] ) ) ? '' : " ({$licence['cc']})";
+            $checked = ( $licence['id'] === '0' ) ? '' : ' checked';
         ?>
-            <li><label><input type="checkbox" id="license-<?php echo esc_attr( $licence['id'] ); ?>" value="<?php echo esc_attr( $licence['id'] ); ?>" name="mexpplus[licenses][flickr_licences]" checked="checked"> <a href="<?php echo esc_url( $licence['url'] ); ?>"><?php echo esc_html( $licence['name'] ); ?></a><?php echo esc_html( $cc ); ?></label></li>
+            <li><label><input type="checkbox" id="license-<?php echo esc_attr( $licence['id'] ); ?>" value="<?php echo esc_attr( $licence['id'] ); ?>" name="mexpplus[licenses][flickr_licences]"<?php echo $checked; ?> /> <a href="<?php echo esc_url( $licence['url'] ); ?>"><?php echo esc_html( $licence['name'] ); ?></a><?php echo esc_html( $cc ); ?></label></li>
         <?php
         }
         ?>
@@ -271,10 +271,10 @@ function mexpplus_template_section_callback() {
         </p>
         <p>
             After the image:<br />
-            <textarea id="mexp-flickr-after" class="code" name="mexpplus[templates][flickr_before]" cols="80" rows="4"><?php echo esc_html( $options['templates']['flickr_after'] ); ?></textarea>
+            <textarea id="mexp-flickr-after" class="code" name="mexpplus[templates][flickr_before]" cols="80" rows="2"><?php echo esc_html( $options['templates']['flickr_after'] ); ?></textarea>
         </p>
         <div class="description">
-            <?php esc_attr_e( 'Use can use these image data tags in your HTML:', 'mexpplus' ); ?><br />
+            <?php esc_attr_e( 'You can use these image data tags in your HTML:', 'mexpplus' ); ?><br />
             <code>%%title%%</code> | <code>%%author_url%%</code> | <code>%%author_name%%</code> | <code>%%license_url%%</code> | <code>%%license_type%%</code>
         </div>
     </fieldset>
