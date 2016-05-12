@@ -170,9 +170,9 @@ function mexpplus_flickr_data( $return, $data, $url ) {
 
     return $return;
 
-    // oembed_dataparse
+    // oembed_result
 }
-add_filter( 'oembed_result', 'mexpplus_flickr_data', 10, 3 );
+add_filter( 'oembed_dataparse', 'mexpplus_flickr_data', 10, 3 );
 
 
 /* ------------------------------------------------------------------------ *
@@ -220,7 +220,7 @@ function mexpplus_flickr_api_key_callback() {
 	// Get your API key at: <https://www.flickr.com/services/apps/create/>
 	return '47a58e28dfdf95e41be62410eb8bcf03';
 }
-// add_filter( 'mexpplus_flickr_api_key', 'mexpplus_flickr_api_key_callback' );
+add_filter( 'mexpplus_flickr_api_key', 'mexpplus_flickr_api_key_callback' );
 
 /**
  * Remove Instagram (for now)
