@@ -122,14 +122,14 @@ function mexpplus_options_init() {
         'mexpplus_licenses_section_callback',
         'mexpplus'
     );
-
+/*
     add_settings_section(
         'mexpplus_template_section',
         __( 'Flickr embed template', 'mexpplus' ),
         'mexpplus_template_section_callback',
         'mexpplus'
     );
-/*
+
     add_settings_field(
         'mexpplus_licenses',
         __( '<em>Flickr</em> Key', 'mexpplus' ),
@@ -166,6 +166,16 @@ Enter your YouTube API Key from Google APIs here.
  */
 function mexpplus_api_section_callback() {
     $options = mexpplus_get_options(); // Option: 'mexpplus'.
+
+    // API service name and credential type ($services and $options keys must match)
+    $services = array(
+        'flickr_key'                  => array( 'Flickr', 'Key' ),
+        'twitter_key'                 => array( 'Twitter', 'Key' ),
+        'twitter_key_secret'          => array( 'Twitter', 'Key Secret' ),
+        'twitter_access_token'        => array( 'Twitter', 'Access Token' ),
+        'twitter_access_token_secret' => array( 'Twitter', 'Access Token Secret' ),
+        'youtube_api_key'             => array( 'YouTube', 'API Key' ),
+    );
     ?>
     <fieldset>
         <legend><?php _e( 'Get your API keys at: ', 'mexpplus' ); ?> <a href="https://www.flickr.com/services/apps/create/">Flickr</a> | <a href="https://apps.twitter.com/">Twitter</a> | <a href="https://code.google.com/apis/console">YouTube</a></legend>
@@ -173,7 +183,7 @@ function mexpplus_api_section_callback() {
         <?php
         foreach ( $options['credentials'] as $cred => $value ) {
         ?>
-            <li><label><span style="text-align: right; padding-right: 20px; display: block; width: 200px; float: left;"><em><?php echo esc_html( $value[0] ); ?></em> <?php echo esc_html( $value[1] ); ?></span> <input type="text" id="<?php echo esc_attr( $cred ); ?>" value="<?php echo esc_attr( $value[2] ); ?>" name="mexpplus[credentials][<?php echo esc_attr( $cred ); ?>]" class="regular-text code" style="display: block; width: 400px;"/></label></li>
+            <li><label><span style="text-align: right; padding-right: 20px; display: block; width: 200px; float: left;"><em><?php echo esc_html( $services[$cred][0] ); ?></em> <?php echo esc_html( $services[$cred][1] ); ?></span> <input type="text" id="<?php echo esc_attr( $cred ); ?>" value="<?php echo esc_attr( $value ); ?>" name="mexpplus[credentials][<?php echo esc_attr( $cred ); ?>]" id="<?php echo esc_attr( $cred ); ?>" class="regular-text code" style="display: block; width: 400px;"/></label></li>
         <?php
         }
         ?>
@@ -258,7 +268,7 @@ function mexpplus_licenses_section_callback() {
             $cc = ( empty( $licence['cc'] ) ) ? '' : " ({$licence['cc']})";
             $checked = ( $licence['id'] === '0' ) ? '' : ' checked';
         ?>
-            <li><label><input type="checkbox" id="license-<?php echo esc_attr( $licence['id'] ); ?>" value="<?php echo esc_attr( $licence['id'] ); ?>" name="mexpplus[licenses][flickr_licences]"<?php echo $checked; ?> /> <a href="<?php echo esc_url( $licence['url'] ); ?>"><?php echo esc_html( $licence['name'] ); ?></a><?php echo esc_html( $cc ); ?></label></li>
+            <li><label><input type="checkbox" id="license-<?php echo esc_attr( $licence['id'] ); ?>" value="<?php echo esc_attr( $licence['id'] ); ?>" name="mexpplus[licenses][flickr_licences][]"<?php echo $checked; ?> /> <a href="<?php echo esc_url( $licence['url'] ); ?>"><?php echo esc_html( $licence['name'] ); ?></a><?php echo esc_html( $cc ); ?></label></li>
         <?php
         }
         ?>
@@ -289,6 +299,26 @@ function mexpplus_template_section_callback() {
         </div>
     </fieldset>
     <?php
+
+
+
+/*
+    Add to mexpplus_api_section_callback():
+    // @todo: combine with mexpplus_flickr_data().
+    $flickr_before = '<figure class="mexp-flickr">';
+    $flickr_after  = '<figcaption class="mexp-flickr-caption">';
+    $flickr_after .= '%%title%% (<a href="%%license_url%%">cc</a>: <a href="%%author_url%%">%%author_name%%</a>)';
+    $flickr_after .= '</figcaption></figure>';
+
+    Add to mexpplus_upgrade_options():
+     $defaults = ...
+        'templates' => array(
+            'flickr_before' =>  htmlentities( $flickr_before ),
+            'flickr_after'  =>  htmlentities( $flickr_after ),
+        ),
+
+*/
+
 }
 
 /* ------------------------------------------------------------------------ *
@@ -310,16 +340,21 @@ function mexpplus_template_section_callback() {
  *
  *     [licenses] => Array
  *         (
- *             [flickr] => {cc_numbers}
+ *             [flickr_licences] => Array
+ *                 (
+ *                     [0] => 0
+ *                     [1] => 1
+ *                     [2] => 2
+ *                     [3] => 3
+ *                     [4] => 4
+ *                     [5] => 5
+ *                     [6] => 6
+ *                     [7] => 7
+ *                     [8] => 8
+ *                 )
  *         )
  *
- *     [templates] => Array
- *         (
- *             [flickr_before] => {html}
- *             [flickr_after]  => {html}
- *         )
- *
- *     [version] => 0.1.1
+ *     [version] => MEXPPLUS_VERSION
  * )
  */
 
@@ -372,27 +407,17 @@ function mexpplus_set_options( $options ) {
  * @return  array   $new_options    Merged array of plugin settings
  */
 function mexpplus_upgrade_options( $options ) {
-    // @todo: combine with mexpplus_flickr_data().
-    $flickr_before = '<figure class="mexp-flickr">';
-    $flickr_after  = '<figcaption class="mexp-flickr-caption">';
-    $flickr_after .= '%%title%% (<a href="%%license_url%%">cc</a>: <a href="%%author_url%%">%%author_name%%</a>)';
-    $flickr_after .= '</figcaption></figure>';
-
     $defaults = array(
         'credentials'      => array(
-            'flickr_key'                  => array( 'Flickr', 'Key', '47a58e28dfdf95e41be62410eb8bcf03' ),
-            'twitter_key'                 => array( 'Twitter', 'Key', 'ZVMfDAPCJ5IT4hMSdNEiDMklg' ),
-            'twitter_key_secret'          => array( 'Twitter', 'Key Secret', '2snhuTBL7NtZOhvpBmNGySX4kdfglO8gqQYseIbQ90ZT1VUPdU' ),
-            'twitter_access_token'        => array( 'Twitter', 'Access Token', '22964713-zFYwtymRaHUPeCto7MqVauH7IAC3CsPXGsn2pZGGT' ),
-            'twitter_access_token_secret' => array( 'Twitter', 'Access Token Secret', 'ur41T9UCBnLdDU7LuPTmU1ALwXcPPD2dxytt2gcSx2lqf' ),
-            'youtube_api_key'             => array( 'YouTube', 'API Key', 'AIzaSyAboJIw70PHz5Nju3XwITQLavY7NPCXhn0' ),
+            'flickr_key' => '',
+            'twitter_key' => '',
+            'twitter_key_secret' => '',
+            'twitter_access_token' => '',
+            'twitter_access_token_secret' => '',
+            'youtube_api_key' => '',
         ),
         'licenses' => array(
             'flickr_licenses' =>  '0,1,2,3,4,5,6,7,8',
-        ),
-        'templates' => array(
-            'flickr_before' =>  htmlentities( $flickr_before ),
-            'flickr_after'  =>  htmlentities( $flickr_after ),
         ),
     );
 

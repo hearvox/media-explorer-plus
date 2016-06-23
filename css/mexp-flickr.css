@@ -78,3 +78,10 @@
         width: 23%;
     }
 }
+
+/**
+ * Twitter
+ * */
+.mexp-content-twitter .mexp-item {
+    width: 100% !important;
+}
