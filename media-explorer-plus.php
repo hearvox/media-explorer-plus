@@ -313,19 +313,26 @@ add_action( 'plugins_loaded', function() {
 /**
  * Adds HTML to the default embed.
  *
+ * This adds mouseover text to the image: title, author, share icons.
+ * (No idea why it does, but it does.)
+ *
  * @since   0.1.0
  */
-/*
-// Not being used:
 function mexpplus_flickr_data( $return, $data, $url ) {
     if ( is_object( $data ) && property_exists( $data, 'provider_name' ) && 'Flickr' === $data->provider_name && strpos( $url, '@N' ) ) {
-    	// MEXP embed URL: http://www.flickr.com/photos/32323502@N00/11793785093
-    	// vs pasted Flickr URL: http://www.flickr.com/photos/{username}}/11793785093
+
     	$return = $data->html;
+
+/*
+        // You can auto-add HTML with data to the embed, e.g.:
     	$return = "<figure class=\"mexp-flickr\">{$return}";
     	$return .= "<figcaption class=\"wp-caption-text mexp-flickr-caption\">";
     	$return .= "{$data->title} (<a href=\"{$data->license_url}\">cc</a>: <a href=\"{$data->author_url}\">{$data->author_name}</a>)";
     	$return .= "</figcaption></figure>";
+*/
+
+        // MEXP embed URL: http://www.flickr.com/photos/32323502@N00/11793785093
+        // vs pasted Flickr URL: http://www.flickr.com/photos/{username}}/11793785093
     }
 
     return $return;
@@ -333,7 +340,7 @@ function mexpplus_flickr_data( $return, $data, $url ) {
     // oembed_result
 }
 add_filter( 'oembed_dataparse', 'mexpplus_flickr_data', 10, 3 );
-*/
+
 
 /* ------------------------------------------------------------------------ *
  * Keys for default services included in Media Explorer plugin.
