@@ -2,17 +2,21 @@
 /**
  * Plugin Name: Media Explorer Plus
  * Depends: Media Explorer
- * Plugin URI: https://github.com/gedex/mexp-flickr
+ * Plugin URI: http://hearingvoices.com/tools/mexp-plus/
  * Description: Flickr extension for the Media Explorer.
- * Version: 0.1.3
- * Author: Akeda Bagus and Barrett Golding
- * Author URI: http://gedex.web.id/
+ * Version: 0.1.4
+ * Author:  Barrett Golding
+ * Author URI: http://hearingvoices.com/
  * Text Domain: mexpplus
  * Domain Path: /languages
  * License: GPL v2 or later
  * Requires at least: 3.6
  * Tested up to: 4.5
  * Plugin prefix: mexpplus
+ *
+ * Uses code from MEXP Flickr by Akeda Bagus <http://gedex.web.id/>:
+ * https://github.com/gedex/mexp-flickr
+ * https://wordpress.org/plugins/mexp-flickr/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +28,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+
 
 
 /* ------------------------------------------------------------------------ *
@@ -310,6 +315,8 @@ add_action( 'plugins_loaded', function() {
  *
  * @since   0.1.0
  */
+/*
+// Not being used:
 function mexpplus_flickr_data( $return, $data, $url ) {
     if ( is_object( $data ) && property_exists( $data, 'provider_name' ) && 'Flickr' === $data->provider_name && strpos( $url, '@N' ) ) {
     	// MEXP embed URL: http://www.flickr.com/photos/32323502@N00/11793785093
@@ -326,14 +333,14 @@ function mexpplus_flickr_data( $return, $data, $url ) {
     // oembed_result
 }
 add_filter( 'oembed_dataparse', 'mexpplus_flickr_data', 10, 3 );
-
+*/
 
 /* ------------------------------------------------------------------------ *
  * Keys for default services included in Media Explorer plugin.
  * ------------------------------------------------------------------------ */
 /*
 
-get_option( 'mexpplus' ):
+Array returned by get_option( 'mexpplus' ):
 
 array(3) {
   ["credentials"]=>
