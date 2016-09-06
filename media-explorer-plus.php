@@ -438,12 +438,12 @@ add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callba
  *
  * @since   0.1.0
  */
-function mexp_service_instagram_not( array $services ) {
+function mexpplus_service_instagram_not( array $services ) {
 	$services['instagram'] = null;
 
 	return $services;
 }
-add_filter( 'mexp_services', 'mexp_service_instagram_not', 20 );
+add_filter( 'mexp_services', 'mexpplus_service_instagram_not', 20 );
 
 /*
 add_filter( 'mexp_instagram_credentials', 'mexpplus_instagram_credentials_callback' );

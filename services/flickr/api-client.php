@@ -36,15 +36,20 @@ class MEXP_Flickr_API_Client {
 			$args[ $key ] = urlencode( $value );
 		}
 
+		$options = mexpplus_get_options(); // Option: 'mexpplus'.
 
-		$args['license'] = '1,2,3,4,5,6,7,8';
+		//Get user-selected CC licenses (default: '1,2,3,4,5,6,7,8').
+		$args['license'] = implode( ',', $options['licenses']['flickr_licences']);
 		$args['extras'] = 'date_taken,description,license,media,owner_name,geo,tags,machine_tags';
 
-		$url_bg = 'https://api.flickr.com/services/rest?method=flickr.photos.search&format=json&nojsoncallback=1&page=0&per_page=19&api_key=47a58e28dfdf95e41be62410eb8bcf03&tags=newspaper-dress';
+		// $url_bg = 'https://api.flickr.com/services/rest?method=flickr.photos.search&format=json&nojsoncallback=1&page=0&per_page=19&api_key=47a58e28dfdf95e41be62410eb8bcf03&tags=newspaper-dress';
 
 		// https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=47a58e28dfdf95e41be62410eb8bcf03&format=json&nojsoncallback=1&license=2,3,4,5,6,7,8&extras=date_upload,date_taken,description,license,media,owner_name&tags=newspaper-dress
 
 		$url      = add_query_arg( $args, self::BASE_URL );
+
+		mexpplus_save_url( $url );
+
 		$response = (array) wp_remote_get( $url );
 
 		if ( ! isset( $response['response']['code'] ) || 200 !== (int) $response['response']['code'] ) {

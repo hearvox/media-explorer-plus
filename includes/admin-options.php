@@ -263,17 +263,23 @@ function mexpplus_licenses_section_callback() {
         <legend><?php _e( 'Check the licenses you wish to browse:', 'mexpplus' ); ?></legend>
         <ul class="inside">
         <?php
-        //
+        $options = mexpplus_get_options(); // Option: 'mexpplus'.
+
         foreach ( $flickr_cc_licences as $licence ) {
             $cc = ( empty( $licence['cc'] ) ) ? '' : " ({$licence['cc']})";
-            $checked = ( $licence['id'] === '0' ) ? '' : ' checked';
+            $licence_id = $licence['id'];
+            // $checked = ( $licence['id'] === '0' ) ? '' : ' checked';
         ?>
-            <li><label><input type="checkbox" id="license-<?php echo esc_attr( $licence['id'] ); ?>" value="<?php echo esc_attr( $licence['id'] ); ?>" name="mexpplus[licenses][flickr_licences][]"<?php echo $checked; ?> /> <a href="<?php echo esc_url( $licence['url'] ); ?>"><?php echo esc_html( $licence['name'] ); ?></a><?php echo esc_html( $cc ); ?></label></li>
+            <li><label><input type="checkbox" id="license-<?php echo esc_attr( $licence_id ); ?>" value="<?php echo esc_attr( $licence_id ); ?>" name="mexpplus[licenses][flickr_licences][]"<?php checked( in_array( $licence_id, $options['licenses']['flickr_licences'] ) ); ?> /> <a href="<?php echo esc_url( $licence['url'] ); ?>"><?php echo esc_html( $licence['name'] ); ?></a><?php echo esc_html( $cc ); ?></label></li>
         <?php
         }
         ?>
         </ul>
     </fieldset>
+
+    <pre>
+        <?php var_dump( mexpplus_get_options() ); ?>
+    </pre>
     <?php
 }
 
@@ -299,8 +305,6 @@ function mexpplus_template_section_callback() {
         </div>
     </fieldset>
     <?php
-
-
 
 /*
     Add to mexpplus_api_section_callback():
@@ -474,4 +478,9 @@ function mexpplus_set_option( $option, $value ) {
     $options[$option] = $value;
 
     mexpplus_set_options( $options );
+}
+
+function mexpplus_save_url( $url ) {
+    $flickr_url = $url;
+    set_transient( 'flickr_url', $flickr_url, MINUTE_IN_SECONDS ); ;
 }
