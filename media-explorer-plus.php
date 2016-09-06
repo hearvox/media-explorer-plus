@@ -227,7 +227,7 @@ class MEXP_Flickr {
 
 		$this->define_constants();
 
-		// Autloader registration.
+		// Autoloader registration.
 		spl_autoload_register( array( $this, 'loader' ) );
 
 		$this->i18n();
@@ -329,51 +329,102 @@ add_filter( 'oembed_dataparse', 'mexpplus_flickr_data', 10, 3 );
 
 
 /* ------------------------------------------------------------------------ *
- * Add services
+ * Keys for default services included in Media Explorer plugin.
+ * ------------------------------------------------------------------------ */
+/*
+
+get_option( 'mexpplus' ):
+
+array(3) {
+  ["credentials"]=>
+  array(6) {
+    ["flickr_key"]=>
+    string(32) "47a58e28dfdf95e41be62410eb8bcf03"
+    ["twitter_key"]=>
+    string(25) "ZVMfDAPCJ5IT4hMSdNEiDMklg"
+    ["twitter_key_secret"]=>
+    string(50) "2snhuTBL7NtZOhvpBmNGySX4kdfglO8gqQYseIbQ90ZT1VUPdU"
+    ["twitter_access_token"]=>
+    string(50) "22964713-zFYwtymRaHUPeCto7MqVauH7IAC3CsPXGsn2pZGGT"
+    ["twitter_access_token_secret"]=>
+    string(45) "ur41T9UCBnLdDU7LuPTmU1ALwXcPPD2dxytt2gcSx2lqf"
+    ["youtube_api_key"]=>
+    string(39) "AIzaSyAboJIw70PHz5Nju3XwITQLavY7NPCXhn0"
+  }
+  ["licenses"]=>
+  array(1) {
+    ["flickr_licences"]=>
+    array(9) {
+      [0]=>
+      string(1) "0"
+      [1]=>
+      string(1) "1"
+      [2]=>
+      string(1) "2"
+      [3]=>
+      string(1) "3"
+      [4]=>
+      string(1) "4"
+      [5]=>
+      string(1) "5"
+      [6]=>
+      string(1) "6"
+      [7]=>
+      string(1) "7"
+      [8]=>
+      string(1) "8"
+    }
+  }
+  ["version"]=>
+  string(5) "0.1.4"
+}
+
+/* ------------------------------------------------------------------------ *
+ * Add connections to API services.
  * ------------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------------------ *
+ * Services added by (required) Media Explorer plugin .
+ * ------------------------------------------------------------------------ */
 /**
  * Twitter
  *
+ * Get developer keys and tokens at: <https://apps.twitter.com/>
+ * Enter value on Settings page for MEXP Plus.
+ *
+ * Filter priority (20) set to run after same filter in Media Explorer plugin.
+ *
+ * @uses mexpplus_get_options()
  * @since   0.1.0
  */
 function mexpplus_twitter_credentials_callback() {
+	$options = mexpplus_get_options();
 
-	// Get your developer keys and tokens at: https://apps.twitter.com/
-	// Add your keys and tokens here.
 	return array(
-		'consumer_key'       => 'ZVMfDAPCJ5IT4hMSdNEiDMklg',
-		'consumer_secret'    => '2snhuTBL7NtZOhvpBmNGySX4kdfglO8gqQYseIbQ90ZT1VUPdU',
-		'oauth_token'        => '22964713-zFYwtymRaHUPeCto7MqVauH7IAC3CsPXGsn2pZGGT',
-		'oauth_token_secret' => 'ur41T9UCBnLdDU7LuPTmU1ALwXcPPD2dxytt2gcSx2lqf'
+		'consumer_key'       => $options['credentials']['twitter_key'],
+		'consumer_secret'    => $options['credentials']['twitter_key_secret'],
+		'oauth_token'        => $options['credentials']['twitter_access_token'],
+		'oauth_token_secret' => $options['credentials']['twitter_access_token_secret'],
 	);
 }
-add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback' );
+add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback', 20 );
 
 /**
  * YouTube
+ * Get developer key at: https://code.google.com/apis/console
+ * Enter value on Settings page for MEXP Plus.
  *
+ * Filter priority (20) set to run after same filter in Media Explorer plugin.
+ *
+ * @uses mexpplus_get_options()
  * @since   0.1.0
  */
 function mexpplus_youtube_developer_key_callback() {
-	// Add your developer key here.
-	// Get your developer key at: <https://code.google.com/apis/console>
-	return 'AIzaSyAboJIw70PHz5Nju3XwITQLavY7NPCXhn0';
-}
-add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callback' );
+	$options = mexpplus_get_options();
 
-/**
- * YouTube
- *
- * @since   0.1.0
- */
-function mexpplus_flickr_api_key_callback() {
-
-	// Add your API key here.
-	// Get your API key at: <https://www.flickr.com/services/apps/create/>
-	return '47a58e28dfdf95e41be62410eb8bcf03';
+	return $options['credentials']['youtube_api_key'];
 }
-add_filter( 'mexpplus_flickr_api_key', 'mexpplus_flickr_api_key_callback' );
+add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callback', 20 );
 
 /**
  * Remove Instagram (for now)
@@ -400,4 +451,26 @@ function mexpplus_instagram_credentials_callback( $credentials ) {
 
 }
 */
+
+/* ------------------------------------------------------------------------ *
+ * Services added by this plugin .
+ * ------------------------------------------------------------------------ */
+
+/**
+ * Flickr
+ *
+ * Get your API key at: <https://www.flickr.com/services/apps/create/>
+ * Enter value on Settings page for MEXP Plus.
+ *
+ * @uses mexpplus_get_options()
+ * @since   0.1.0
+ */
+function mexpplus_flickr_api_key_callback() {
+	$options = mexpplus_get_options();
+
+	return $options['credentials']['flickr_key'];
+}
+add_filter( 'mexpplus_flickr_api_key', 'mexpplus_flickr_api_key_callback' );
+
+
 
