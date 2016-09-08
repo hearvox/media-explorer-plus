@@ -55,8 +55,9 @@ include_once( dirname( __FILE__ ) . '/includes/admin-options.php' );
 /**
  * Load the TGM_Plugin_Activation class.
  *
+ * Requires Media Explorer plugin (and handles download from GitHub).
+ *
  */
-
 require_once dirname( __FILE__ ) . '/includes/class-tgm-plugin-activation.php';
 add_action( 'tgmpa_register', 'mexpplus_register_required_plugins' );
 
@@ -134,6 +135,7 @@ function mexpplus_register_required_plugins() {
 
 
 		/*
+            // Unused TGMPA settings:
 
 			'notice_can_install_recommended'  => _n_noop(
 				/* translators: 1: plugin name(s). * /
@@ -207,7 +209,9 @@ function mexpplus_register_required_plugins() {
 /**
  * Class that acts as plugin bootstrapper.
  *
+ * From:
  * @author Akeda Bagus <admin@gedex.web.id>
+ * @link https://github.com/gedex/mexp-flickr
  */
 class MEXP_Flickr {
 
@@ -259,7 +263,7 @@ class MEXP_Flickr {
 		$classname = str_replace( __CLASS__ . '_', '', $classname );
 		$filename  = str_replace( '_', '-', strtolower( $classname ) );
 
-		require_once MEXP_FLICKR_SERVICES_DIR . $filename . '.php';
+		require_once MEXPPLUS_FLICKR_SERVICES_DIR . $filename . '.php';
 	}
 
 	/**
@@ -270,11 +274,11 @@ class MEXP_Flickr {
 	 * @return void
 	 */
 	public function define_constants() {
-		define( 'MEXP_FLICKR_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+		define( 'MEXPPLUS_FLICKR_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
-		define( 'MEXP_FLICKR_SERVICES_DIR', MEXP_FLICKR_DIR . trailingslashit( 'services/flickr' ) );
+		define( 'MEXPPLUS_FLICKR_SERVICES_DIR', MEXPPLUS_FLICKR_DIR . trailingslashit( 'services/flickr' ) );
 
-		define( 'MEXP_FLICKR_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+		define( 'MEXPPLUS_FLICKR_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 	}
 
 	/**
@@ -304,7 +308,7 @@ class MEXP_Flickr {
 }
 
 add_action( 'plugins_loaded', function() {
-	$GLOBALS['mexp_flickr'] = new MEXP_Flickr();
+	$GLOBALS['mexpplus_flickr'] = new MEXP_Flickr();
 } );
 
 
@@ -313,7 +317,7 @@ add_action( 'plugins_loaded', function() {
 /**
  * Adds HTML to the default embed.
  *
- * Not used.
+ * Seems to add mouseover text:  title, author, share icons.
  *
  * @since   0.1.0
  */
@@ -338,7 +342,7 @@ function mexpplus_flickr_data( $return, $data, $url ) {
 
     // oembed_result
 }
-// add_filter( 'oembed_dataparse', 'mexpplus_flickr_data', 10, 3 );
+add_filter( 'oembed_dataparse', 'mexpplus_flickr_data', 10, 3 );
 
 
 /* ------------------------------------------------------------------------ *

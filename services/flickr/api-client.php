@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class that acts as plugin bootstrapper.
+ * Class makes an API request from service, then returns data.
  *
  * Adatped from:
  * @author Akeda Bagus <admin@gedex.web.id>
@@ -51,9 +51,6 @@ class MEXP_Flickr_API_Client {
 			$args[ $key ] = urlencode( $value );
 		}
 
-
-
-
 		// $url_bg = 'https://api.flickr.com/services/rest?method=flickr.photos.search&format=json&nojsoncallback=1&page=0&per_page=19&api_key=47a58e28dfdf95e41be62410eb8bcf03&tags=newspaper-dress';
 
 		// https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=47a58e28dfdf95e41be62410eb8bcf03&format=json&nojsoncallback=1&license=2,3,4,5,6,7,8&extras=date_upload,date_taken,description,license,media,owner_name&tags=newspaper-dress
@@ -67,7 +64,7 @@ class MEXP_Flickr_API_Client {
 		if ( ! isset( $response['response']['code'] ) || 200 !== (int) $response['response']['code'] ) {
 			return new WP_Error(
 				'mexp_flickr_unexpected_response',
-				sprintf( __( 'Unexpected response from Flickr API with status code %s', 'mexp-flickr' ), $response['response']['code'] )
+				sprintf( __( 'Unexpected response from Flickr API with status code %s - try again.', 'mexp-flickr' ), $response['response']['code'] )
 			);
 		}
 
