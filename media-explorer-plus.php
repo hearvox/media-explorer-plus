@@ -313,8 +313,7 @@ add_action( 'plugins_loaded', function() {
 /**
  * Adds HTML to the default embed.
  *
- * This adds mouseover text to the image: title, author, share icons.
- * (No idea why it does, but it does.)
+ * Not used.
  *
  * @since   0.1.0
  */
@@ -339,7 +338,7 @@ function mexpplus_flickr_data( $return, $data, $url ) {
 
     // oembed_result
 }
-add_filter( 'oembed_dataparse', 'mexpplus_flickr_data', 10, 3 );
+// add_filter( 'oembed_dataparse', 'mexpplus_flickr_data', 10, 3 );
 
 
 /* ------------------------------------------------------------------------ *

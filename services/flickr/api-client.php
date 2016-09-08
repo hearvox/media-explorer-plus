@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class that acts as plugin bootstrapper.
+ *
+ * Adatped from:
+ * @author Akeda Bagus <admin@gedex.web.id>
+ * @link https://github.com/gedex/mexp-flickr
+ *
+ */
 class MEXP_Flickr_API_Client {
 
 	const BASE_URL = 'https://api.flickr.com/services/rest';
@@ -32,15 +40,19 @@ class MEXP_Flickr_API_Client {
 		if ( ! isset( $args['api_key'] ) )
 			$args['api_key'] = $this->api_key;
 
+		$options = mexpplus_get_options(); // Option: 'mexpplus'.
+
+		// Get user-selected CC licenses (default: '1,2,3,4,5,6,7,8').
+		// This data seems to add mouseover text to the image: title, author, share icons.
+		$args['license'] = implode( ',', $options['licenses']['flickr_licences']);
+		$args['extras'] = 'date_taken,description,license,media,owner_name,geo,tags,machine_tags';
+
 		foreach ( $args as $key => $value ) {
 			$args[ $key ] = urlencode( $value );
 		}
 
-		$options = mexpplus_get_options(); // Option: 'mexpplus'.
 
-		//Get user-selected CC licenses (default: '1,2,3,4,5,6,7,8').
-		$args['license'] = implode( ',', $options['licenses']['flickr_licences']);
-		$args['extras'] = 'date_taken,description,license,media,owner_name,geo,tags,machine_tags';
+
 
 		// $url_bg = 'https://api.flickr.com/services/rest?method=flickr.photos.search&format=json&nojsoncallback=1&page=0&per_page=19&api_key=47a58e28dfdf95e41be62410eb8bcf03&tags=newspaper-dress';
 
