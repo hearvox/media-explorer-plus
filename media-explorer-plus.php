@@ -289,7 +289,7 @@ class MEXP_Flickr {
 	 * @return void
 	 */
 	public function i18n() {
-		load_plugin_textdomain( 'mexp-flickr', false, 'media-explorer-plus/languages' );
+		load_plugin_textdomain( 'mexpplus', false, 'media-explorer-plus/languages' );
 	}
 
 	/**
@@ -317,7 +317,7 @@ add_action( 'plugins_loaded', function() {
 /**
  * Adds HTML to the default embed.
  *
- * Seems to add mouseover text:  title, author, share icons.
+ * Seems (???) to add mouseover text:  title, author, share icons.
  *
  * @since   0.1.0
  */
