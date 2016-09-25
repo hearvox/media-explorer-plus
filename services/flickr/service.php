@@ -117,7 +117,7 @@ class MEXP_Flickr_Service extends MEXP_Service {
 		else
 			$page = $request['page'];
 
-		$per_page = (int) apply_filters( 'mexp_flickr_per_page', self::DEFAULT_PER_PAGE );
+		$per_page = (int) apply_filters( 'mexpplus_flickr_per_page', self::DEFAULT_PER_PAGE );
 
 		$method         = 'flickr.photos.search';
 		$format         = 'json';
