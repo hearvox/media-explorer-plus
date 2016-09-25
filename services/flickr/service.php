@@ -74,14 +74,14 @@ class MEXP_Flickr_Service extends MEXP_Service {
 	public function tabs( array $tabs ) {
 		$tabs[ self::NAME ] = array(
 			'all' => array(
-				'text'       => _x( 'All', 'Tab title', 'mexp-flickr' ),
+				'text'       => _x( 'All', 'Tab title', 'mexpplus' ),
 				'defaultTab' => true,
 			),
 			'tags' => array(
-				'text' => _x( 'By Tags', 'Tab title', 'mexp-flickr' ),
+				'text' => _x( 'By Tags', 'Tab title', 'mexpplus' ),
 			),
 			'user_id' => array(
-				'text' => _x( 'By User', 'Tab title', 'mexp-flickr' ),
+				'text' => _x( 'By User', 'Tab title', 'mexpplus' ),
 			),
 		);
 
@@ -98,10 +98,10 @@ class MEXP_Flickr_Service extends MEXP_Service {
 	 */
 	public function labels( array $labels ) {
 		$labels[ self::NAME ] = array(
-			'title'     => __( 'Insert Flickr', 'mexp-flickr' ),
-			'insert'    => __( 'Insert', 'mexp-flickr' ),
-			'noresults' => __( 'No photos matched your search query.', 'mexp-flickr' ),
-			'loadmore'  => __( 'Load more photos', 'mexp-flickr' ),
+			'title'     => __( 'Insert Flickr', 'mexpplus' ),
+			'insert'    => __( 'Insert', 'mexpplus' ),
+			'noresults' => __( 'No photos matched your search query.', 'mexpplus' ),
+			'loadmore'  => __( 'Load more photos', 'mexpplus' ),
 		);
 
 		return $labels;
