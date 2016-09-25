@@ -59,7 +59,7 @@ class MEXP_Flickr_Template extends MEXP_Template {
 						value="{{ data.params.text }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php echo esc_attr( 'Search Flickr photos', 'mexp-flickr' ); ?>">
+						placeholder="<?php esc_attr_e( 'Search Flickr photos', 'mexpplus' ); ?>">
 					<input type="hidden" name="tab" value="all">
 					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp' ) ?>">
 					<div class="spinner"></div>
@@ -75,7 +75,7 @@ class MEXP_Flickr_Template extends MEXP_Template {
 						value="{{ data.params.tags }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php echo esc_attr( 'Enter tags', 'mexp-flickr' ); ?>">
+						placeholder="<?php esc_attr_e( 'Enter tags', 'mexpplus' ); ?>">
 					<input type="hidden" name="tab" value="tags">
 					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp' ) ?>">
 					<div class="spinner"></div>
@@ -91,7 +91,7 @@ class MEXP_Flickr_Template extends MEXP_Template {
 						value="{{ data.params.user_id }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php echo esc_attr( 'Enter Flickr user id', 'mexp-flickr' ); ?>">
+						placeholder="<?php esc_attr_e( 'Enter Flickr user id', 'mexpplus' ); ?>">
 					<input type="hidden" name="tab" value="user_id">
 					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp' ) ?>">
 					<div class="spinner"></div>
