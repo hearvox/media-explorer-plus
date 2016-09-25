@@ -8,7 +8,7 @@
  * @link https://github.com/gedex/mexp-flickr
  *
  */
-class MEXP_Flickr_API_Client {
+class MEXPPlus_Flickr_API_Client {
 
 	const BASE_URL = 'https://api.flickr.com/services/rest';
 

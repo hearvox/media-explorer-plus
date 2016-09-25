@@ -6,7 +6,7 @@
  * @since 0.1.0
  * @author Akeda Bagus <admin@gedex.web.id>
  */
-class MEXP_Flickr_Service extends MEXP_Service {
+class MEXPPlus_Flickr_Service extends MEXP_Service {
 
 	/**
 	 * Service name.
@@ -27,7 +27,7 @@ class MEXP_Flickr_Service extends MEXP_Service {
 	 * @return void
 	 */
 	public function __construct() {
-		$tpl = new MEXP_Flickr_Template();
+		$tpl = new MEXPPlus_Flickr_Template();
 		$this->set_template( $tpl );
 	}
 
@@ -195,7 +195,7 @@ class MEXP_Flickr_Service extends MEXP_Service {
 			);
 		}
 
-		return new MEXP_Flickr_API_Client( $api_key );
+		return new MEXPPlus_Flickr_API_Client( $api_key );
 	}
 }
 

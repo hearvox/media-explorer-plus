@@ -1,6 +1,6 @@
 <?php
 
-class MEXP_Flickr_Template extends MEXP_Template {
+class MEXPPlus_Flickr_Template extends MEXP_Template {
 
 	/**
 	 * Template for single element returned from the API.

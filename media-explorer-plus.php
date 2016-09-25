@@ -213,7 +213,7 @@ function mexpplus_register_required_plugins() {
  * @author Akeda Bagus <admin@gedex.web.id>
  * @link https://github.com/gedex/mexp-flickr
  */
-class MEXP_Flickr {
+class MEXPPlus_Flickr {
 
 	/**
 	 * Plugin version.
@@ -311,13 +311,13 @@ class MEXP_Flickr {
 	 * @return array $services Associative array of Media Explorer services to load; key is a string, value is a MEXP_Template object.
 	 */
 	public function load_flickr_service( array $services ) {
-		$services[ MEXP_Flickr_Service::NAME ] = new MEXP_Flickr_Service;
+		$services[ MEXPPlus_Flickr_Service::NAME ] = new MEXPPlus_Flickr_Service;
 		return $services;
 	}
 }
 
 add_action( 'plugins_loaded', function() {
-	$GLOBALS['mexpplus_flickr'] = new MEXP_Flickr();
+	$GLOBALS['mexpplus_flickr'] = new MEXPPlus_Flickr();
 } );
 
 
