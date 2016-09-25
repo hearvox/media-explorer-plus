@@ -328,8 +328,8 @@ function mexpplus_flickr_data( $return, $data, $url ) {
 
 /*
         // You can auto-add HTML with data to the embed, e.g.:
-    	$return = "<figure class=\"mexp-flickr\">{$return}";
-    	$return .= "<figcaption class=\"wp-caption-text mexp-flickr-caption\">";
+    	$return = "<figure class=\"mexpplus-flickr\">{$return}";
+    	$return .= "<figcaption class=\"wp-caption-text mexpplus-flickr-caption\">";
     	$return .= "{$data->title} (<a href=\"{$data->license_url}\">cc</a>: <a href=\"{$data->author_url}\">{$data->author_name}</a>)";
     	$return .= "</figcaption></figure>";
 */

@@ -293,11 +293,11 @@ function mexpplus_template_section_callback() {
         <legend><?php _e( 'Enter HTML for before and sfter the Flickr embed:', 'mexpplus' ); ?></legend>
         <p>
             Before the image:<br />
-            <textarea id="mexp-flickr-before" class="code" name="mexpplus[templates][flickr_before]" cols="80" rows="2"><?php echo esc_html( $options['templates']['flickr_before'] ); ?></textarea>
+            <textarea id="mexpplus-flickr-before" class="code" name="mexpplus[templates][flickr_before]" cols="80" rows="2"><?php echo esc_html( $options['templates']['flickr_before'] ); ?></textarea>
         </p>
         <p>
             After the image:<br />
-            <textarea id="mexp-flickr-after" class="code" name="mexpplus[templates][flickr_before]" cols="80" rows="2"><?php echo esc_html( $options['templates']['flickr_after'] ); ?></textarea>
+            <textarea id="mexpplus-flickr-after" class="code" name="mexpplus[templates][flickr_before]" cols="80" rows="2"><?php echo esc_html( $options['templates']['flickr_after'] ); ?></textarea>
         </p>
         <div class="description">
             <?php esc_attr_e( 'You can use these image data tags in your HTML:', 'mexpplus' ); ?><br />
@@ -309,8 +309,8 @@ function mexpplus_template_section_callback() {
 /*
     Add to mexpplus_api_section_callback():
     // @todo: combine with mexpplus_flickr_data().
-    $flickr_before = '<figure class="mexp-flickr">';
-    $flickr_after  = '<figcaption class="mexp-flickr-caption">';
+    $flickr_before = '<figure class="mexpplus-flickr">';
+    $flickr_after  = '<figcaption class="mexpplus-flickr-caption">';
     $flickr_after .= '%%title%% (<a href="%%license_url%%">cc</a>: <a href="%%author_url%%">%%author_name%%</a>)';
     $flickr_after .= '</figcaption></figure>';
 
