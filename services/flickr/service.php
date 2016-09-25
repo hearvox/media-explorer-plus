@@ -100,7 +100,7 @@ class MEXP_Flickr_Service extends MEXP_Service {
 		$labels[ self::NAME ] = array(
 			'title'     => __( 'Insert Flickr', 'mexp-flickr' ),
 			'insert'    => __( 'Insert', 'mexp-flickr' ),
-			'noresults' => __( 'No photos matched your search query', 'mexp-flickr' ),
+			'noresults' => __( 'No photos matched your search query.', 'mexp-flickr' ),
 			'loadmore'  => __( 'Load more photos', 'mexp-flickr' ),
 		);
 

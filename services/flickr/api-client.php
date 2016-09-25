@@ -63,15 +63,15 @@ class MEXP_Flickr_API_Client {
 
 		if ( ! isset( $response['response']['code'] ) || 200 !== (int) $response['response']['code'] ) {
 			return new WP_Error(
-				'mexp_flickr_unexpected_response',
-				sprintf( __( 'Unexpected response from Flickr API with status code %s - try again.', 'mexp-flickr' ), $response['response']['code'] )
+				'mexpplus_flickr_unexpected_response',
+				sprintf( __( 'Unexpected response from Flickr API with status code %s - try again.', 'mexpplis' ), $response['response']['code'] )
 			);
 		}
 
 		$decoded_response = json_decode( $response['body'], true );
 		if ( isset( $decoded_response['stat'] ) && 'fail' === $decoded_response['stat'] ) {
 			return new WP_Error(
-				'mexp_flickr_fail_stat_response',
+				'mexpplus_flickr_fail_stat_response',
 				$decoded_response['message']
 			);
 		}
