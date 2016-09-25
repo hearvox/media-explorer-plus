@@ -56,10 +56,10 @@ class MEXP_Flickr_Service extends MEXP_Service {
 	 */
 	public function enqueue_statics() {
 		wp_enqueue_style(
-			'mexp-flickr',
-			trailingslashit( MEXPPLUS_FLICKR_URL ) . 'css/mexpplus.css',
+			'mexpplus',
+			trailingslashit( MEXPPLUS_URL ) . 'css/mexpplus.css',
 			array( 'mexp' ),
-			MEXP_Flickr::VERSION
+			MEXPPLUS_VERSION
 		);
 	}
 

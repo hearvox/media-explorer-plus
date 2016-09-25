@@ -278,7 +278,7 @@ class MEXP_Flickr {
 
 		define( 'MEXPPLUS_FLICKR_SERVICES_DIR', MEXPPLUS_FLICKR_DIR . trailingslashit( 'services/flickr' ) );
 
-		define( 'MEXPPLUS_FLICKR_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+		define( 'MEXPPLUS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 	}
 
 	/**
