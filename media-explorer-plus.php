@@ -237,9 +237,13 @@ class MEXP_Flickr {
 		$this->define_constants();
 
 		// Autoloader registration.
-		spl_autoload_register( array( $this, 'loader' ) );
+		// spl_autoload_register( array( $this, 'loader' ) );
 
-		$this->i18n();
+		require_once( dirname( __FILE__ ) . '/services/flickr/api-client.php' );
+        require_once( dirname( __FILE__ ) . '/services/flickr/service.php' );
+        require_once( dirname( __FILE__ ) . '/services/flickr/template.php' );
+
+        $this->i18n();
 
 		// Loads the Flickr service.
 		add_filter( 'mexp_services', array( $this, 'load_flickr_service' ) );
@@ -263,7 +267,12 @@ class MEXP_Flickr {
 		$classname = str_replace( __CLASS__ . '_', '', $classname );
 		$filename  = str_replace( '_', '-', strtolower( $classname ) );
 
-		require_once MEXPPLUS_FLICKR_SERVICES_DIR . $filename . '.php';
+
+		// require_once MEXPPLUS_FLICKR_SERVICES_DIR . $filename . '.php';
+
+        require_once( dirname( __FILE__ ) . '/services/flickr/api-client.php' );
+        require_once( dirname( __FILE__ ) . '/services/flickr/service.php' );
+        require_once( dirname( __FILE__ ) . '/services/flickr/template.php' );
 	}
 
 	/**
