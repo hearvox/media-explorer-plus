@@ -320,8 +320,6 @@ add_action( 'plugins_loaded', function() {
 } );
 
 
-
-
 /**
  * Adds HTML to the default embed.
  *
@@ -456,7 +454,7 @@ if ( ! empty ( $creds['flickr_key'] ) )  {
     $service_remove[] = 'flickr';
 }
 
-if ( empty( $service_remove ) ) {
+if ( ! empty( $service_remove ) ) {
     function mexpplus_service_remove( array $services ) {
         global $service_remove;
 
@@ -505,7 +503,6 @@ function mexpplus_cred_cb_youtube() {
 
     return $options['credentials']['youtube_api_key'];
 }
-// add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callback', 20 );
 
 /**
  * Instagram service added by Media Explorer plugin.
