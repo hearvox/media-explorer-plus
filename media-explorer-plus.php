@@ -4,7 +4,7 @@
  * Depends: Media Explorer
  * Plugin URI: http://hearingvoices.com/tools/mexp-plus/
  * Description: Flickr extension for the Media Explorer.
- * Version: 0.1.4
+ * Version: 0.1.7
  * Author:  Barrett Golding
  * Author URI: http://hearingvoices.com/
  * Text Domain: mexpplus
@@ -12,7 +12,7 @@
  * License: GPL v2 or later
  * Requires at least: 3.6
  * Tested up to: 4.5
- * Plugin prefix: mexpplus
+ * Function prefix: mexpplus
  *
  * Uses code from MEXP Flickr by Akeda Bagus <http://gedex.web.id/>:
  * https://github.com/gedex/mexp-flickr
@@ -44,7 +44,7 @@ if ( defined( 'MEXPPLUS_VERSION' ) ) {
     return;
 }
 
-define( 'MEXPPLUS_VERSION', '0.1.4' );
+define( 'MEXPPLUS_VERSION', '0.1.7' );
 
 /* ------------------------------------------------------------------------ *
  * Required Plugin Files
@@ -55,6 +55,8 @@ include_once( dirname( __FILE__ ) . '/includes/admin-options.php' );
 /**
  * Load the TGM_Plugin_Activation class.
  *
+ * @link  http://tgmpluginactivation.com/
+ * @version  2.6.1
  * Requires Media Explorer plugin (and handles download from GitHub).
  *
  */
@@ -62,21 +64,18 @@ require_once dirname( __FILE__ ) . '/includes/class-tgm-plugin-activation.php';
 add_action( 'tgmpa_register', 'mexpplus_register_required_plugins' );
 
 /**
- * Register the required plugins for this theme.
- *
- * In this example, we register five plugins:
- * - one included with the TGMPA library
- * - two from an external source, one from an arbitrary source, one from a GitHub repository
- * - two from the .org repo, where one demonstrates the use of the `is_callable` argument
+ * Register the required plugin (Media Explorer at GitHub).
  *
  * The variables passed to the `tgmpa()` function should be:
  * - an array of plugin arrays;
  * - optionally a configuration array.
- * If you are not changing anything in the configuration array, you can remove the array and remove the
- * variable from the function call: `tgmpa( $plugins );`.
+ *
+ * If you are not changing anything in the configuration array, you can remove
+ * the array and remove the variable from the function call: `tgmpa( $plugins );`.
  * In that case, the TGMPA default settings will be used.
  *
- * This function is hooked into `tgmpa_register`, which is fired on the WP `init` action on priority 10.
+ * This function is hooked into `tgmpa_register`,
+ * which is fired on the WP `init` action on priority 10.
  */
 function mexpplus_register_required_plugins() {
 	/*
@@ -402,12 +401,57 @@ array(3) {
     }
   }
   ["version"]=>
-  string(5) "0.1.4"
+  string(5) "0.1.5"
 }
 
 /* ------------------------------------------------------------------------ *
  * Add connections to API services.
  * ------------------------------------------------------------------------ */
+/**
+ * API keys requred for media services. Get developer keys at:
+ * Twitter: <https://apps.twitter.com/> (2 keys and 2 tokens)
+ * YouTube: <https://code.google.com/apis/console> (1 key)
+ * Flicker: <https://www.flickr.com/services/apps/create/> (1 key)
+ * Instagram: <https://instagram.com/developer> (1 key, must register domain)
+ *
+ * Enter above API key values on the Settings page for MEXP Plus.
+ *
+ * Filter priority (20) set to run after same filter in Media Explorer plugin.
+ *
+ * @uses mexpplus_get_options()
+ * @since   0.1.5
+ */
+$options = mexpplus_get_options();
+$creds   = $options['credentials'];
+
+// Add Twitter.
+if ( $creds['twitter_key'] || $creds['twitter_key_secret'] || $creds['twitter_access_token']
+    || $creds['twitter_access_token_secret'] ) {
+    add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback', 20 );
+} else {}
+
+// Add YouTube.
+if ( $creds['youtube_api_key'] ) {
+    add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callback', 20 );
+} else {}
+
+// Add Flickr.
+if ( $creds['flickr_key'] )  {
+    add_filter( 'mexpplus_flickr_api_key', 'mexpplus_flickr_api_key_callback' );
+} else {}
+
+
+// Add Instagram.
+if ( $creds['flickr_key'] )  {
+    add_filter( 'mexp_instagram_credentials', 'mexpplus_instagram_credentials_callback' );
+} else {}
+
+
+
+// add_filter( 'mexp_services', 'mexpplus_services_add' );
+
+
+
 
 /* ------------------------------------------------------------------------ *
  * Services added by (required) Media Explorer plugin .
@@ -433,7 +477,10 @@ function mexpplus_twitter_credentials_callback() {
 		'oauth_token_secret' => $options['credentials']['twitter_access_token_secret'],
 	);
 }
-add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback', 20 );
+// add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback', 20 );
+
+// youtube:
+// AIzaSyAboJIw70PHz5Nju3XwITQLavY7NPCXhn0
 
 /**
  * YouTube
@@ -448,9 +495,32 @@ add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback',
 function mexpplus_youtube_developer_key_callback() {
 	$options = mexpplus_get_options();
 
-	return $options['credentials']['youtube_api_key'];
+    if ( $options['credentials']['youtube_api_key'] ) {
+        return $options['credentials']['youtube_api_key'];
+    } else {
+
+    }
+
 }
-add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callback', 20 );
+// add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callback', 20 );
+
+
+
+/**
+ * Remove services without and API key from Add Media panel.
+ *
+ * @since   0.1.0
+ */
+function mexpplus_service_remove( array $services ) {
+    $services['instagram'] = null;
+    $services['youtube'] = null;
+
+    return $services;
+}
+// add_filter( 'mexp_services', 'mexpplus_service_remove', 20 );
+
+
+
 
 /**
  * Remove Instagram (for now)
@@ -464,19 +534,19 @@ function mexpplus_service_instagram_not( array $services ) {
 }
 add_filter( 'mexp_services', 'mexpplus_service_instagram_not', 20 );
 
-/*
-add_filter( 'mexp_instagram_credentials', 'mexpplus_instagram_credentials_callback' );
-
 function mexpplus_instagram_credentials_callback( $credentials ) {
 
 	// Add your developer key here.
 	// Get your developer key at: <https://instagram.com/developer>
-	return array(
+
+/*	return array(
 		'access_token' => 'da78a1918b934ab5bf8f47c774f0a9a6',
 	);
-
-}
 */
+    $options = mexpplus_get_options();
+
+    return $options['credentials']['instagram_access_token'];
+}
 
 /* ------------------------------------------------------------------------ *
  * Services added by this plugin .
@@ -496,7 +566,7 @@ function mexpplus_flickr_api_key_callback() {
 
 	return $options['credentials']['flickr_key'];
 }
-add_filter( 'mexpplus_flickr_api_key', 'mexpplus_flickr_api_key_callback' );
+// add_filter( 'mexpplus_flickr_api_key', 'mexpplus_flickr_api_key_callback' );
 
 
 

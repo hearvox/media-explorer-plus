@@ -48,7 +48,7 @@ function mexpplus_help_tab() {
             'title'     => __( 'Settings', 'mexpplus' ),
             'content'   =>
                 '<p><strong>' . __( 'Media Explorer Plus', 'mexpplus' ) . '</strong></p>' .
-                '<p>' . __( 'Enter your YouTube, Twitter, and Flickr API keys.', 'mexpplus' ) . '</p>',
+                '<p>' . __( 'Enter your YouTube, Twitter, Flickr, and Instagram API keys.', 'mexpplus' ) . '</p>',
         )
     );
 
@@ -175,10 +175,11 @@ function mexpplus_api_section_callback() {
         'twitter_access_token'        => array( 'Twitter', 'Access Token' ),
         'twitter_access_token_secret' => array( 'Twitter', 'Access Token Secret' ),
         'youtube_api_key'             => array( 'YouTube', 'API Key' ),
+        'instagram_access_token'      => array( 'Instagram', 'Access Token' ),
     );
     ?>
     <fieldset>
-        <legend><?php _e( 'Get your API keys at: ', 'mexpplus' ); ?> <a href="https://www.flickr.com/services/apps/create/">Flickr</a> | <a href="https://apps.twitter.com/">Twitter</a> | <a href="https://code.google.com/apis/console">YouTube</a></legend>
+        <legend><?php _e( 'Get your API keys at: ', 'mexpplus' ); ?> <a href="https://www.flickr.com/services/apps/create/">Flickr</a> | <a href="https://apps.twitter.com/">Twitter</a> | <a href="https://code.google.com/apis/console">YouTube</a> | <a href="https://instagram.com/developer">Instagram</a> </legend>
         <ul class="inside">
         <?php
         foreach ( $options['credentials'] as $cred => $value ) {
@@ -290,7 +291,7 @@ function mexpplus_template_section_callback() {
     $options = mexpplus_get_options(); // Option: 'mexpplus'.
     ?>
     <fieldset>
-        <legend><?php _e( 'Enter HTML for before and sfter the Flickr embed:', 'mexpplus' ); ?></legend>
+        <legend><?php _e( 'Enter HTML for before and after the Flickr embed:', 'mexpplus' ); ?></legend>
         <p>
             Before the image:<br />
             <textarea id="mexpplus-flickr-before" class="code" name="mexpplus[templates][flickr_before]" cols="80" rows="2"><?php echo esc_html( $options['templates']['flickr_before'] ); ?></textarea>
@@ -339,7 +340,8 @@ function mexpplus_template_section_callback() {
  *             [twitter_key_secret]          => {Consumer_Secret}
  *             [twitter_access_token]        => {Access_Token}
  *             [twitter_access_token_secret] => {Access_Token_Secret}
- *             [youtube] => {API_Key}
+ *             [youtube]                     => {API_Key}
+ *             [instagram_access_token]      => {Access_Token}
  *         )
  *
  *     [licenses] => Array
@@ -419,6 +421,7 @@ function mexpplus_upgrade_options( $options ) {
             'twitter_access_token' => '',
             'twitter_access_token_secret' => '',
             'youtube_api_key' => '',
+            'instagram_access_token' => '',
         ),
         'licenses' => array(
             'flickr_licenses' =>  '0,1,2,3,4,5,6,7,8',
