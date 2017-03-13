@@ -375,6 +375,8 @@ array(3) {
     string(45) "ur41T9UCBnLdDU7LuPTmU1ALwXcPPD2dxytt2gcSx2lqf"
     ["youtube_api_key"]=>
     string(39) "AIzaSyAboJIw70PHz5Nju3XwITQLavY7NPCXhn0"
+    ["instagram_access_token"]=>
+    "da78a1918b934ab5bf8f47c774f0a9a6"
   }
   ["licenses"]=>
   array(1) {
@@ -421,54 +423,68 @@ array(3) {
  * @uses mexpplus_get_options()
  * @since   0.1.5
  */
-$options = mexpplus_get_options();
-$creds   = $options['credentials'];
+$options        = mexpplus_get_options();
+$creds          = $options['credentials'];
+$service_remove = array();
 
 // Add Twitter.
 if ( $creds['twitter_key'] || $creds['twitter_key_secret'] || $creds['twitter_access_token']
     || $creds['twitter_access_token_secret'] ) {
-    add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback', 20 );
-} else {}
+    add_filter( 'mexp_twitter_credentials', 'mexpplus_cred_cb_twitter', 20 );
+} else {
+    $service_remove[] = 'twitter';
+}
 
 // Add YouTube.
 if ( $creds['youtube_api_key'] ) {
-    add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callback', 20 );
-} else {}
-
-// Add Flickr.
-if ( $creds['flickr_key'] )  {
-    add_filter( 'mexpplus_flickr_api_key', 'mexpplus_flickr_api_key_callback' );
-} else {}
-
+    add_filter( 'mexp_youtube_developer_key', 'mexpplus_cred_cb_youtube', 20 );
+} else {
+    $service_remove[] = 'youtube';
+}
 
 // Add Instagram.
-if ( $creds['flickr_key'] )  {
-    add_filter( 'mexp_instagram_credentials', 'mexpplus_instagram_credentials_callback' );
-} else {}
+if ( ! empty ( $creds['instagram_access_token'] ) )  {
+    add_filter( 'mexp_instagram_credentials', 'mexpplus_cred_cb_instagram' );
+} else {
+    $service_remove[] = 'instagram';
+}
 
+// Add Flickr.
+if ( ! empty ( $creds['flickr_key'] ) )  {
+    add_filter( 'mexpplus_flickr_api_key', 'mexpplus_cred_cb_flickr' );
+} else {
+    $service_remove[] = 'flickr';
+}
 
+if ( empty( $service_remove ) ) {
+    function mexpplus_service_remove( array $services ) {
+        global $service_remove;
+
+        foreach ( $service_remove as $service ) {
+            $services[ $service ] = null;
+        }
+
+        return $services;
+    }
+    add_filter( 'mexp_services', 'mexpplus_service_remove', 20 );
+}
 
 // add_filter( 'mexp_services', 'mexpplus_services_add' );
 
-
+//  AIzaSyAboJIw70PHz5Nju3XwITQLavY7NPCXhn0
 
 
 /* ------------------------------------------------------------------------ *
- * Services added by (required) Media Explorer plugin .
+ * Callbacks to get required API service credentials (from 'mexpplus' option).
  * ------------------------------------------------------------------------ */
 /**
- * Twitter
+ * Twitter service added by Media Explorer plugin.
  *
- * Get developer keys and tokens at: <https://apps.twitter.com/>
- * Enter value on Settings page for MEXP Plus.
- *
- * Filter priority (20) set to run after same filter in Media Explorer plugin.
- *
- * @uses mexpplus_get_options()
- * @since   0.1.0
+ * @global $options Value of get_options( 'mexpplus' ).\
+ * @since  0.1.0
  */
-function mexpplus_twitter_credentials_callback() {
-	$options = mexpplus_get_options();
+function mexpplus_cred_cb_twitter() {
+	global $options;
 
 	return array(
 		'consumer_key'       => $options['credentials']['twitter_key'],
@@ -477,96 +493,45 @@ function mexpplus_twitter_credentials_callback() {
 		'oauth_token_secret' => $options['credentials']['twitter_access_token_secret'],
 	);
 }
-// add_filter( 'mexp_twitter_credentials', 'mexpplus_twitter_credentials_callback', 20 );
-
-// youtube:
-// AIzaSyAboJIw70PHz5Nju3XwITQLavY7NPCXhn0
 
 /**
- * YouTube
- * Get developer key at: https://code.google.com/apis/console
- * Enter value on Settings page for MEXP Plus.
+ * YouTube service added by Media Explorer plugin.
  *
- * Filter priority (20) set to run after same filter in Media Explorer plugin.
- *
- * @uses mexpplus_get_options()
- * @since   0.1.0
+ * @global $options Value of get_options( 'mexpplus' ).\
+ * @since  0.1.0
  */
-function mexpplus_youtube_developer_key_callback() {
-	$options = mexpplus_get_options();
+function mexpplus_cred_cb_youtube() {
+    global $options;
 
-    if ( $options['credentials']['youtube_api_key'] ) {
-        return $options['credentials']['youtube_api_key'];
-    } else {
-
-    }
-
+    return $options['credentials']['youtube_api_key'];
 }
 // add_filter( 'mexp_youtube_developer_key', 'mexpplus_youtube_developer_key_callback', 20 );
 
-
-
 /**
- * Remove services without and API key from Add Media panel.
+ * Instagram service added by Media Explorer plugin.
  *
- * @since   0.1.0
+ * @global $options Value of get_options( 'mexpplus' ).\
+ * @since  0.1.0
  */
-function mexpplus_service_remove( array $services ) {
-    $services['instagram'] = null;
-    $services['youtube'] = null;
+function mexpplus_cred_cb_instagram( $credentials ) {
+    global $options;
 
-    return $services;
-}
-// add_filter( 'mexp_services', 'mexpplus_service_remove', 20 );
-
-
-
-
-/**
- * Remove Instagram (for now)
- *
- * @since   0.1.0
- */
-function mexpplus_service_instagram_not( array $services ) {
-	$services['instagram'] = null;
-
-	return $services;
-}
-add_filter( 'mexp_services', 'mexpplus_service_instagram_not', 20 );
-
-function mexpplus_instagram_credentials_callback( $credentials ) {
-
-	// Add your developer key here.
-	// Get your developer key at: <https://instagram.com/developer>
-
-/*	return array(
-		'access_token' => 'da78a1918b934ab5bf8f47c774f0a9a6',
-	);
-*/
-    $options = mexpplus_get_options();
-
-    return $options['credentials']['instagram_access_token'];
+    return array(
+        'access_token' => $options['credentials']['instagram_access_token'],
+    );
 }
 
-/* ------------------------------------------------------------------------ *
- * Services added by this plugin .
- * ------------------------------------------------------------------------ */
-
 /**
- * Flickr
+ * Flickr service added by this plugin.
  *
- * Get your API key at: <https://www.flickr.com/services/apps/create/>
- * Enter value on Settings page for MEXP Plus.
- *
- * @uses mexpplus_get_options()
- * @since   0.1.0
+ * @global $options Value of get_options( 'mexpplus' ).\
+ * @since  0.1.0
  */
-function mexpplus_flickr_api_key_callback() {
-	$options = mexpplus_get_options();
+function mexpplus_cred_cb_flickr() {
+    global $options;
 
 	return $options['credentials']['flickr_key'];
 }
-// add_filter( 'mexpplus_flickr_api_key', 'mexpplus_flickr_api_key_callback' );
 
 
 
