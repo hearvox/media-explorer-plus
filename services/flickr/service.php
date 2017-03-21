@@ -202,7 +202,7 @@ class MEXPPlus_Flickr_Service extends MEXP_Service {
 		if ( empty( $api_key ) ) {
 			return new WP_Error(
 				'mexpplus_flickr_missing_api_key',
-				__( 'Missing API key for Flickr', 'mexpplus' )
+				__( 'Missing API key for Flickr. (from Flickr App Garden; enter key in Settings: MEXP Plus).', 'mexpplus' )
 			);
 		}
 

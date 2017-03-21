@@ -187,7 +187,7 @@ function mexpplus_api_section_callback() {
             // Add space above selected fields.
             $margin = ( $services[$cred][2] === 1 ) ? ' style="margin-top: 2em;"' : '';
         ?>
-            <li<?php echo $margin ?>><label><?php echo $line_breaks ?><span style="text-align: right; padding-right: 20px; display: block; width: 200px; float: left;"><em><?php echo esc_html( $services[$cred][0] ); ?></em> <?php echo esc_html( $services[$cred][1] ); ?></span> <input type="text" id="<?php echo esc_attr( $cred ); ?>" value="<?php echo esc_attr( $value ); ?>" name="mexpplus[credentials][<?php echo esc_attr( $cred ); ?>]" id="<?php echo esc_attr( $cred ); ?>" class="regular-text code" style="display: block; width: 400px;"/></label></li>
+            <li<?php echo $margin ?>><label><span style="text-align: right; padding-right: 20px; display: block; width: 200px; float: left;"><em><?php echo esc_html( $services[$cred][0] ); ?></em> <?php echo esc_html( $services[$cred][1] ); ?></span> <input type="text" id="<?php echo esc_attr( $cred ); ?>" value="<?php echo esc_attr( $value ); ?>" name="mexpplus[credentials][<?php echo esc_attr( $cred ); ?>]" id="<?php echo esc_attr( $cred ); ?>" class="regular-text code" style="display: block; width: 400px;"/></label></li>
         <?php
         }
         ?>
