@@ -250,13 +250,13 @@ function mexpplus_licenses_section_callback() {
             'url'  => 'http://creativecommons.org/licenses/by-nd/2.0/',
         ),
         array(
-            'cc'   => '',
+            'cc'   => 'The Commons usage',
             'id'   => '7',
             'name' => 'Flickr Commons',
             'url'  => 'http://flickr.com/commons/usage/',
         ),
         array(
-            'cc' => '',
+            'cc' => 'USA.gov copyright',
             'id'   => '8',
             'name' => 'United States Government Work',
             'url' => 'http://www.usa.gov/copyright.shtml',
@@ -269,12 +269,14 @@ function mexpplus_licenses_section_callback() {
         <?php
         $options = mexpplus_get_options(); // Option: 'mexpplus'.
 
+
         foreach ( $flickr_cc_licences as $licence ) {
-            $cc = ( empty( $licence['cc'] ) ) ? '' : " ({$licence['cc']})";
+            $cc = ( empty( $licence['cc'] ) ) ? '' : ' (<a href="' . esc_url( $licence['url'] ) . '">' . $licence['cc'] . '</a>)';
             $licence_id = $licence['id'];
+            $flickr_licences = ( empty( $options['licenses']['flickr_licences'] ) ) ? array() : $options['licenses']['flickr_licences'];
             // $checked = ( $licence['id'] === '0' ) ? '' : ' checked';
         ?>
-            <li><label><input type="checkbox" id="license-<?php echo esc_attr( $licence_id ); ?>" value="<?php echo esc_attr( $licence_id ); ?>" name="mexpplus[licenses][flickr_licences][]"<?php checked( in_array( $licence_id, $options['licenses']['flickr_licences'] ) ); ?> /> <a href="<?php echo esc_url( $licence['url'] ); ?>"><?php echo esc_html( $licence['name'] ); ?></a><?php echo esc_html( $cc ); ?></label></li>
+            <li><label><input type="checkbox" id="license-<?php echo esc_attr( $licence_id ); ?>" value="<?php echo esc_attr( $licence_id ); ?>" name="mexpplus[licenses][flickr_licences][]"<?php checked( in_array( $licence_id, $flickr_licences ) ); ?> /> <?php echo esc_html( $licence['name'] ); ?></label><?php echo $cc; ?></li>
         <?php
         }
         ?>
