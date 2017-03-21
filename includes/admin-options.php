@@ -118,7 +118,7 @@ function mexpplus_options_init() {
 
     add_settings_section(
         'mexpplus_licenses_section',
-        __( 'Creative Commons licenses', 'mexpplus' ),
+        __( 'Creative Commons licenses (for Flickr)', 'mexpplus' ),
         'mexpplus_licenses_section_callback',
         'mexpplus'
     );
@@ -167,15 +167,16 @@ Enter your YouTube API Key from Google APIs here.
 function mexpplus_api_section_callback() {
     $options = mexpplus_get_options(); // Option: 'mexpplus'.
 
-    // API service name and credential type ($services and $options keys must match)
+    // API service name and credential type ($services and $options keys must match).
+    // Array items: {Service name}, {API credential}, {Add margin above field}.
     $services = array(
-        'flickr_key'                  => array( 'Flickr', 'Key' ),
-        'twitter_key'                 => array( 'Twitter', 'Key' ),
-        'twitter_key_secret'          => array( 'Twitter', 'Key Secret' ),
-        'twitter_access_token'        => array( 'Twitter', 'Access Token' ),
-        'twitter_access_token_secret' => array( 'Twitter', 'Access Token Secret' ),
-        'youtube_api_key'             => array( 'YouTube', 'API Key' ),
-        'instagram_access_token'      => array( 'Instagram', 'Access Token' ),
+        'flickr_key'                  => array( 'Flickr', 'Key', 0 ),
+        'twitter_key'                 => array( 'Twitter', 'Key', 1 ),
+        'twitter_key_secret'          => array( 'Twitter', 'Key Secret', 0 ),
+        'twitter_access_token'        => array( 'Twitter', 'Access Token', 0 ),
+        'twitter_access_token_secret' => array( 'Twitter', 'Access Token Secret', 0 ),
+        'youtube_api_key'             => array( 'YouTube', 'API Key', 1 ),
+        'instagram_access_token'      => array( 'Instagram', 'Access Token', 1 ),
     );
     ?>
     <fieldset>
@@ -183,8 +184,10 @@ function mexpplus_api_section_callback() {
         <ul class="inside">
         <?php
         foreach ( $options['credentials'] as $cred => $value ) {
+            // Add space above selected fields.
+            $margin = ( $services[$cred][2] === 1 ) ? ' style="margin-top: 2em;"' : '';
         ?>
-            <li><label><span style="text-align: right; padding-right: 20px; display: block; width: 200px; float: left;"><em><?php echo esc_html( $services[$cred][0] ); ?></em> <?php echo esc_html( $services[$cred][1] ); ?></span> <input type="text" id="<?php echo esc_attr( $cred ); ?>" value="<?php echo esc_attr( $value ); ?>" name="mexpplus[credentials][<?php echo esc_attr( $cred ); ?>]" id="<?php echo esc_attr( $cred ); ?>" class="regular-text code" style="display: block; width: 400px;"/></label></li>
+            <li<?php echo $margin ?>><label><?php echo $line_breaks ?><span style="text-align: right; padding-right: 20px; display: block; width: 200px; float: left;"><em><?php echo esc_html( $services[$cred][0] ); ?></em> <?php echo esc_html( $services[$cred][1] ); ?></span> <input type="text" id="<?php echo esc_attr( $cred ); ?>" value="<?php echo esc_attr( $value ); ?>" name="mexpplus[credentials][<?php echo esc_attr( $cred ); ?>]" id="<?php echo esc_attr( $cred ); ?>" class="regular-text code" style="display: block; width: 400px;"/></label></li>
         <?php
         }
         ?>

@@ -21,7 +21,6 @@ class MEXPPlus_Flickr_Service extends MEXP_Service {
 	/**
 	 * Constructor.
 	 *
-	 * Sets template.
 	 *
 	 * @since 0.1.0
 	 * @return void
@@ -35,7 +34,8 @@ class MEXPPlus_Flickr_Service extends MEXP_Service {
 	 * Fired when the service is loaded.
 	 *
 	 * Enqueue static assets.
-	 *
+	 * Allows the service to enqueue JS/CSS only when it's required.
+	 * Akin to WordPress' load action.
 	 * Hooks into MEXP tabs and labels.
 	 *
 	 * @since 0.1.0
@@ -69,7 +69,8 @@ class MEXPPlus_Flickr_Service extends MEXP_Service {
 	 * @since 0.1.0
 	 * @filter mexp_tabs.
 	 * @param array $tabs Associative array of default tab items.
-	 * @return array Associative array of tabs. The key is the tab ID and the value is an array of tab attributes.
+	 * @return array Associative array of tabs.
+	 * The key is the tab ID and the value is an array of tab attributes.
 	 */
 	public function tabs( array $tabs ) {
 		$tabs[ self::NAME ] = array(
@@ -107,6 +108,16 @@ class MEXPPlus_Flickr_Service extends MEXP_Service {
 		return $labels;
 	}
 
+	/**
+	 * Handles the AJAX request and returns an appropriate response.
+	 * This should be used, for example, to perform an API request
+	 * to the service provider and return the results.
+	 *
+	 * @param array $request The request parameters.
+	 * @return MEXP_Response|bool|WP_Error A MEXP_Response object should be returned on success,
+	 * boolean false should be returned if there are no results to show,
+	 * and a WP_Error should be returned if there is an error.
+	 */
 	public function request( array $request ) {
 		if ( is_wp_error( $flickr = $this->_get_client() ) )
 			return $flickr;

@@ -208,6 +208,8 @@ function mexpplus_register_required_plugins() {
 /**
  * Class that acts as plugin bootstrapper.
  *
+ * Creates new media service.
+ *
  * From:
  * @author Akeda Bagus <admin@gedex.web.id>
  * @link https://github.com/gedex/mexp-flickr
@@ -306,8 +308,10 @@ class MEXPPlus_Flickr {
 	 * @since 0.1.0
 	 * @access public
 	 * @filter mexp_services
-	 * @param @param array $services Associative array of Media Explorer services to load; key is a string, value is a MEXP_Template object.
-	 * @return array $services Associative array of Media Explorer services to load; key is a string, value is a MEXP_Template object.
+	 * @param @param array $services Associative array of Media Explorer services to load;
+     * key is a string, value is a MEXP_Template object.
+	 * @return array $services Associative array of Media Explorer services to load;
+     * key is a string, value is a MEXP_Template object.
 	 */
 	public function load_flickr_service( array $services ) {
 		$services[ MEXPPlus_Flickr_Service::NAME ] = new MEXPPlus_Flickr_Service;
@@ -454,6 +458,7 @@ if ( ! empty ( $creds['flickr_key'] ) )  {
     $service_remove[] = 'flickr';
 }
 
+// Don't display services in Add Media panel (if no cred set in option).
 if ( ! empty( $service_remove ) ) {
     function mexpplus_service_remove( array $services ) {
         global $service_remove;
@@ -467,10 +472,8 @@ if ( ! empty( $service_remove ) ) {
     add_filter( 'mexp_services', 'mexpplus_service_remove', 20 );
 }
 
+// @todo Add services in an array.
 // add_filter( 'mexp_services', 'mexpplus_services_add' );
-
-//  AIzaSyAboJIw70PHz5Nju3XwITQLavY7NPCXhn0
-
 
 /* ------------------------------------------------------------------------ *
  * Callbacks to get required API service credentials (from 'mexpplus' option).
@@ -529,6 +532,3 @@ function mexpplus_cred_cb_flickr() {
 
 	return $options['credentials']['flickr_key'];
 }
-
-
-

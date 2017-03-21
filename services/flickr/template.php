@@ -5,6 +5,8 @@ class MEXPPlus_Flickr_Template extends MEXP_Template {
 	/**
 	 * Template for single element returned from the API.
 	 *
+	 * Outputs the Backbone template for an item within search results.
+	 *
 	 * @param  string $id  ID of the view
 	 * @param  string $tab Selected tab
 	 * @return void
@@ -36,6 +38,11 @@ class MEXPPlus_Flickr_Template extends MEXP_Template {
 		<?php
 	}
 
+	/**
+	 * Outputs the Backbone template for a select item's thumbnail in the footer toolbar.
+	 *
+	 * @param string $id The template ID.
+	 */
 	public function thumbnail( $id ) {
 		?>
 		<?php
@@ -43,6 +50,8 @@ class MEXPPlus_Flickr_Template extends MEXP_Template {
 
 	/**
 	 * Template for the search form.
+	 *
+	 * Outputs the Backbone template for a tab's search fields.
 	 *
 	 * @param  string $id ID of the view
 	 * @param  string $tab Selected tab
